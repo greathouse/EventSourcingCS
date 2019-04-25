@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GreenMoonSoftware.EventSourcing.Core", "GreenMoonSoftware.EventSourcing.Core\GreenMoonSoftware.EventSourcing.Core.csproj", "{828789EC-4326-4F02-A548-966DBCB455D6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ManualTester", "ManualTester\ManualTester.csproj", "{26BFC076-99E2-4764-A27E-2819DD5790E8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GreenMoonSoftware.EventSourcing.CoreTest", "GreenMoonSoftware.EventSourcing.CoreTest\GreenMoonSoftware.EventSourcing.CoreTest.csproj", "{40ADF061-D031-4B53-A559-1F9F4448D70B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{828789EC-4326-4F02-A548-966DBCB455D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{828789EC-4326-4F02-A548-966DBCB455D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{828789EC-4326-4F02-A548-966DBCB455D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{828789EC-4326-4F02-A548-966DBCB455D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{26BFC076-99E2-4764-A27E-2819DD5790E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{26BFC076-99E2-4764-A27E-2819DD5790E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{26BFC076-99E2-4764-A27E-2819DD5790E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{26BFC076-99E2-4764-A27E-2819DD5790E8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{40ADF061-D031-4B53-A559-1F9F4448D70B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{40ADF061-D031-4B53-A559-1F9F4448D70B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{40ADF061-D031-4B53-A559-1F9F4448D70B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{40ADF061-D031-4B53-A559-1F9F4448D70B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
