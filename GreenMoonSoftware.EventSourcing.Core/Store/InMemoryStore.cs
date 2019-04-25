@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using GreenMoonSoftware.EventSourcing.Core.Event;
 
 namespace GreenMoonSoftware.EventSourcing.Core.Store
@@ -6,16 +7,27 @@ namespace GreenMoonSoftware.EventSourcing.Core.Store
         : IStoreRetrieval<T>, IEventSubscriber<IEvent>
         where T: IAggregate
     {
+        private readonly Dictionary<string, EventList> _eventsByAggregate = new Dictionary<string, EventList>();
+        
         public abstract T Create();
         
         public T Retrieve(string aggregateId)
         {
-            return (T) (IAggregate) null;
+            T aggregate = Create();
+            aggregate.Apply(EventsForAggregate(aggregateId));
+            return aggregate;
         }
 
         public void OnEvent(IEvent @event)
         {
-            throw new System.NotImplementedException();
+            var events = EventsForAggregate(@event.AggregateId);
+            events.Add(@event);
+            _eventsByAggregate[@event.AggregateId] = events;
+        }
+
+        private EventList EventsForAggregate(string aggregateId)
+        {
+            return _eventsByAggregate.GetValueOrDefault(aggregateId, new EventList());
         }
     }
 }
