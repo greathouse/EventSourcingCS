@@ -19,7 +19,7 @@ namespace GreenMoonSoftware.EventSourcing.Core.Event
 
         public void Unregister(IEventSubscriber<IEvent> subscriber)
         {
-            throw new System.NotImplementedException();
+            _subscribers.Remove(subscriber);
         }
     }
 }

@@ -33,5 +33,23 @@ namespace GreenMoonSoftware.EventSourcing.CoreTest.Event
             Assert.Single(subscriber1.Events);
             Assert.Single(subscriber2.Events);
         }
+
+        [Fact]
+        public void GivenSubscriber_WhenUnregister_ShouldNoLongerReceiveEvents()
+        {
+            var @event = new TestEvent("One");
+            var subscriber = new TestEventSubscriber();
+            
+            var bus = new SimpleBus();
+            bus.Register(subscriber);
+            bus.Post(@event);
+            
+            Assert.Single(subscriber.Events);
+            
+            bus.Unregister(subscriber);
+            bus.Post(@event);
+            
+            Assert.Single(subscriber.Events);
+        }
     }
 }
