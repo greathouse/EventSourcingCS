@@ -2,7 +2,7 @@ namespace GreenMoonSoftware.EventSourcing.Core.Event
 {
     public interface Aggregate
     {
-        string getId();
-        void apply(EventList events);
+        string Id { get; }
+        void Apply(EventList events);
     }
 }

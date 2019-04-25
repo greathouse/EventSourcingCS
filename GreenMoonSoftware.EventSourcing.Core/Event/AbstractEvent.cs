@@ -2,7 +2,7 @@ using System;
 
 namespace GreenMoonSoftware.EventSourcing.Core.Event
 {
-    public class AbstractEvent : IEvent
+    public abstract class AbstractEvent : IEvent
     {
         public AbstractEvent(string aggregateId, string type) {
             this.AggregateId = aggregateId;
