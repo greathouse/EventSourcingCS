@@ -18,7 +18,7 @@ namespace GreenMoonSoftware.EventSourcing.Core.Event
             return this;
         }
 
-        public EventList AddAll(List<IEvent> events)
+        public EventList AddAll(IEnumerable<IEvent> events)
         {
             this.events.AddRange(events);
             return this;
