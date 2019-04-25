@@ -24,9 +24,9 @@ namespace GreenMoonSoftware.EventSourcing.CoreTest.Command
 
     public class TestAggregate : IAggregate
     {
-        public bool Command1Handled { get; private set; } = false;
+        public bool Command1Handled { get; private set; }
 
-        public bool Command2Handled { get; private set; } = false;
+        public bool Command2Handled { get; private set; }
 
         public string Id { get; }
 
