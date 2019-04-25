@@ -32,12 +32,4 @@ namespace GreenMoonSoftware.EventSourcing.CoreTest.Event
             Assert.Contains<IEvent>(second, actuals);
         }
     }
-
-    class TestEvent : AbstractEvent
-    {
-        public TestEvent(string id) : base(id, Guid.NewGuid().ToString())
-        {
-            
-        }
-    }
 }
