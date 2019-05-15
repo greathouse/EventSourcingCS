@@ -6,6 +6,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ManualTester", "ManualTeste
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GreenMoonSoftware.EventSourcing.CoreTest", "GreenMoonSoftware.EventSourcing.CoreTest\GreenMoonSoftware.EventSourcing.CoreTest.csproj", "{40ADF061-D031-4B53-A559-1F9F4448D70B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GreenMoonSoftware.EventSourcing.Database.SqlLite", "GreenMoonSoftware.EventSourcing.Database.SqlLite\GreenMoonSoftware.EventSourcing.Database.SqlLite.csproj", "{74296EBF-6CB7-4696-8616-FEB9F82A3A18}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GreenMoonSoftware.EventSourcing.Database.SqlLiteTest", "GreenMoonSoftware.EventSourcing.Database.SqlLiteTest\GreenMoonSoftware.EventSourcing.Database.SqlLiteTest.csproj", "{BF5722E6-01E2-4245-9570-B8C6DE75F55F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GreenMoonSoftware.EventSourcing.Database", "GreenMoonSoftware.EventSourcing.Database\GreenMoonSoftware.EventSourcing.Database.csproj", "{DA660670-2438-40D3-B2CC-E07658DD0F7A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GreenMoonSoftware.EventSourcing.DatabaseTest", "GreenMoonSoftware.EventSourcing.DatabaseTest\GreenMoonSoftware.EventSourcing.DatabaseTest.csproj", "{6B01AF43-1480-4DB7-AB82-268BD79B5050}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +32,21 @@ Global
 		{40ADF061-D031-4B53-A559-1F9F4448D70B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{40ADF061-D031-4B53-A559-1F9F4448D70B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{40ADF061-D031-4B53-A559-1F9F4448D70B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{74296EBF-6CB7-4696-8616-FEB9F82A3A18}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{74296EBF-6CB7-4696-8616-FEB9F82A3A18}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{74296EBF-6CB7-4696-8616-FEB9F82A3A18}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{74296EBF-6CB7-4696-8616-FEB9F82A3A18}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF5722E6-01E2-4245-9570-B8C6DE75F55F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF5722E6-01E2-4245-9570-B8C6DE75F55F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF5722E6-01E2-4245-9570-B8C6DE75F55F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF5722E6-01E2-4245-9570-B8C6DE75F55F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DA660670-2438-40D3-B2CC-E07658DD0F7A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA660670-2438-40D3-B2CC-E07658DD0F7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA660670-2438-40D3-B2CC-E07658DD0F7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA660670-2438-40D3-B2CC-E07658DD0F7A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6B01AF43-1480-4DB7-AB82-268BD79B5050}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B01AF43-1480-4DB7-AB82-268BD79B5050}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B01AF43-1480-4DB7-AB82-268BD79B5050}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B01AF43-1480-4DB7-AB82-268BD79B5050}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
