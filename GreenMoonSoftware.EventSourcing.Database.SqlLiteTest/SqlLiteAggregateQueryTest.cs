@@ -33,31 +33,12 @@ namespace GreenMoonSoftware.EventSourcing.SqlLiteTest
         [Fact]
         public void ShouldStoreAndRetrieveAggregateEvents()
         {
-            var configuration = new DatabaseConfiguration
-            {
-                ConnectionString = $"Data Source={Path.GetTempFileName()};Version=3;",
-                TableName = "TestAggregate"
-            };
-            CreateEventTable(configuration);
+            var configuration = TestHelper.Configuration();
+            TestHelper.CreateEventTable(configuration);
             
             var query = new SqlLiteAggregateQuery<TestAggregate>(configuration);
             var aggregateId = Guid.NewGuid().ToString();
             query.Retrieve(aggregateId);
-        }
-
-        private static void CreateEventTable(DatabaseConfiguration configuration)
-        {
-            var conn = new SQLiteConnection(configuration.ConnectionString);
-            conn.Open();
-            var createTable = conn.CreateCommand();
-            createTable.CommandText = @"create table 
-                                            id VARCHAR,
-                                            aggregateId VARCHAR,
-                                            eventType VARCHAR,
-                                            eventDateTime TIMESTAMP,
-                                            savedTimestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP(),
-                                            data BLOB";
-            createTable.ExecuteNonQuery();
         }
     }
 
