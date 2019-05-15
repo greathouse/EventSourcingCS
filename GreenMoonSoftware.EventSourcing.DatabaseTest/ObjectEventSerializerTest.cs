@@ -19,18 +19,15 @@ namespace GreenMoonSoftware.EventSourcing.DatabaseTest
                 Type = Guid.NewGuid().ToString(),
                 EventDateTime = DateTime.Now
             };
-            var tempFile = Path.GetTempFileName();
-            var file = new FileStream(tempFile, FileMode.Create, FileAccess.Write, FileShare.None);
             
             var serializer = new ObjectEventSerializer();
-            using (var serial = serializer.Serialize(expected)) {
-                serial.Position = 0;
-                var actual = serializer.Deserialize("", serial);
-                Assert.Equal(expected.Id, actual.Id);
-                Assert.Equal(expected.Type, actual.Type);
-                Assert.Equal(expected.AggregateId, actual.AggregateId);
-                Assert.Equal(expected.EventDateTime, actual.EventDateTime);
-            }
+            var serial = serializer.Serialize(expected);
+            
+            var actual = serializer.Deserialize("", serial);
+            Assert.Equal(expected.Id, actual.Id);
+            Assert.Equal(expected.Type, actual.Type);
+            Assert.Equal(expected.AggregateId, actual.AggregateId);
+            Assert.Equal(expected.EventDateTime, actual.EventDateTime);
         }
     }
 
