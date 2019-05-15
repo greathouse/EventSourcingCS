@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp2.2</TargetFramework>
+        <RootNamespace>GreenMoonSoftware.EventSourcing.SqlLite</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="System.Data.SQLite" Version="1.0.110" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\GreenMoonSoftware.EventSourcing.Database\GreenMoonSoftware.EventSourcing.Database.csproj" />
+    </ItemGroup>
+
+</Project>
