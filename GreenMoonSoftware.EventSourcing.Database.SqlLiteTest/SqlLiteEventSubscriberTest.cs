@@ -3,7 +3,9 @@ using System.Data.SQLite;
 using System.Runtime.CompilerServices;
 using GreenMoonSoftware.EventSourcing.Core.Event;
 using GreenMoonSoftware.EventSourcing.Database;
+using GreenMoonSoftware.EventSourcing.Json;
 using GreenMoonSoftware.EventSourcing.SqlLite;
+using Newtonsoft.Json;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -19,47 +21,69 @@ namespace GreenMoonSoftware.EventSourcing.SqlLiteTest
         }
         
         [Fact]
-        public void ShouldSaveEvents()
+        public void GivenObjectSerializer_ShouldSaveEvents()
+        {
+            Run_ShouldSaveEvents(new ObjectEventSerializer());
+        }
+
+        [Fact]
+        public void GivenJsonSerializer_ShouldSaveEvents()
+        {
+            Run_ShouldSaveEvents(new JsonEventSerializer());
+        }
+
+        private void Run_ShouldSaveEvents(IEventSerializer eventSerializer)
         {
             var configuration = SetupDatabase();
 
-            var subscriber = new SqlLiteEventSubscriber<IEvent>(configuration, new ObjectEventSerializer());
+            var subscriber = new SqlLiteEventSubscriber<IEvent>(configuration, eventSerializer);
 
             var aggregateId = Guid.NewGuid().ToString();
             subscriber.OnEvent(new TestEvent1(aggregateId));
             subscriber.OnEvent(new TestEvent2(aggregateId));
-            
+
             var connection = new SQLiteConnection(configuration.ConnectionString);
             connection.Open();
             var command = connection.CreateCommand();
             command.CommandText = $"select count(*) from {configuration.TableName}";
 
             var actual = command.ExecuteScalar();
-            
+
             Assert.Equal(2L, actual);
         }
 
         [Fact]
-        public void ShouldWriteEventData()
+        public void GivenObjectSerializer_ShouldWriteEventData()
+        {
+            Run_ShouldWriteEventData(new ObjectEventSerializer());
+        }
+
+        [Fact]
+        public void GivenJsonSerializer_ShouldWriteEventData()
+        {
+            Run_ShouldWriteEventData(new JsonEventSerializer());
+        }
+
+        private void Run_ShouldWriteEventData(IEventSerializer serializer)
         {
             var configuration = SetupDatabase();
 
-            var serializer = new ObjectEventSerializer();
             var subscriber = new SqlLiteEventSubscriber<IEvent>(configuration, serializer);
 
             var aggregateId = Guid.NewGuid().ToString();
             var expectedData = $"This is my random data {Guid.NewGuid()}";
-            subscriber.OnEvent(new EventWithData(aggregateId, expectedData));
-            
+            var testEvent = new EventWithData(aggregateId, expectedData);
+            subscriber.OnEvent(testEvent);
+
             var connection = new SQLiteConnection(configuration.ConnectionString);
             connection.Open();
             var command = connection.CreateCommand();
             command.CommandText = $"select data from {configuration.TableName}";
 
             var actualBytes = command.ExecuteScalar();
-            var actual = serializer.Deserialize("", (byte[])actualBytes);
+            var actual = serializer.Deserialize(testEvent.Type, (byte[]) actualBytes);
             Assert.IsType<EventWithData>(actual);
-            Assert.Equal(expectedData, ((EventWithData)actual).Data);
+            Assert.Equal(expectedData, ((EventWithData) actual).Data);
         }
 
         private DatabaseConfiguration SetupDatabase()
