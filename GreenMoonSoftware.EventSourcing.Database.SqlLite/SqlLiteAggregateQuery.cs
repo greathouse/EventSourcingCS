@@ -3,7 +3,7 @@ using GreenMoonSoftware.EventSourcing.Database;
 
 namespace GreenMoonSoftware.EventSourcing.SqlLite
 {
-    public class SqlLiteAggregateQuery<T> where T: IAggregate
+    public abstract class SqlLiteAggregateQuery<T> where T: IAggregate
     {
         private readonly DatabaseConfiguration _configuration;
 
@@ -12,9 +12,11 @@ namespace GreenMoonSoftware.EventSourcing.SqlLite
             _configuration = configuration;
         }
 
+        public abstract T Create();
+
         public T Retrieve(string aggregateId)
         {
-            return default(T);
+            return Create();
         }
     }
 }
