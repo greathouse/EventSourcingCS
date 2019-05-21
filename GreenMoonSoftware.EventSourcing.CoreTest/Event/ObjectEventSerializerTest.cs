@@ -22,8 +22,8 @@ namespace GreenMoonSoftware.EventSourcing.CoreTest.Event
             
             var actual = serializer.Deserialize("", serial);
             Assert.Equal(expected.Id, actual.Id);
-            Assert.Equal((string) expected.Type, actual.Type);
-            Assert.Equal((string) expected.AggregateId, actual.AggregateId);
+            Assert.Equal(expected.Type, actual.Type);
+            Assert.Equal(expected.AggregateId, actual.AggregateId);
             Assert.Equal(expected.EventDateTime, actual.EventDateTime);
         }
     }
