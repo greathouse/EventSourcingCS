@@ -1,18 +1,15 @@
 using System;
-using System.IO;
 using GreenMoonSoftware.EventSourcing.Core.Event;
-using GreenMoonSoftware.EventSourcing.Database;
-using Microsoft.VisualStudio.TestPlatform.ObjectModel.Client;
 using Xunit;
 
-namespace GreenMoonSoftware.EventSourcing.DatabaseTest
+namespace GreenMoonSoftware.EventSourcing.CoreTest.Event
 {
     public class ObjectEventSerializerTest
     {
         [Fact]
         public void CanSerializeAndDeserialize()
         {
-            var expected = new TestEvent
+            var expected = new ObjectSerializerTestEvent
             {
                 Id = Guid.NewGuid(),
                 AggregateId = Guid.NewGuid().ToString(),
@@ -25,14 +22,14 @@ namespace GreenMoonSoftware.EventSourcing.DatabaseTest
             
             var actual = serializer.Deserialize("", serial);
             Assert.Equal(expected.Id, actual.Id);
-            Assert.Equal(expected.Type, actual.Type);
-            Assert.Equal(expected.AggregateId, actual.AggregateId);
+            Assert.Equal((string) expected.Type, actual.Type);
+            Assert.Equal((string) expected.AggregateId, actual.AggregateId);
             Assert.Equal(expected.EventDateTime, actual.EventDateTime);
         }
     }
 
     [Serializable]
-    public class TestEvent : IEvent
+    public class ObjectSerializerTestEvent : IEvent
     {
         public Guid Id { get; set; }
         public string AggregateId { get; set;}
