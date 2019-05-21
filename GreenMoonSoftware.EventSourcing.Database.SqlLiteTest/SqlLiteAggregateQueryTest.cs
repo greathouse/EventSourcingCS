@@ -12,25 +12,6 @@ namespace GreenMoonSoftware.EventSourcing.SqlLiteTest
     public class SqlLiteAggregateQueryTest
     {
         [Fact]
-        public void Test1()
-        {
-            var connection = new SQLiteConnection("Data Source=:memory:");
-            connection.Open();
-            var command = connection.CreateCommand();
-            command.CommandText = "CREATE table blah (id varchar(150))";
-            command.ExecuteNonQuery();
-            command.CommandText = "insert into blah values ('1')";
-            command.ExecuteNonQuery();
-            command.CommandText = "select * from blah";
-            var r = command.ExecuteReader();
-            while (r.Read())
-            {
-                Console.WriteLine(r.GetString(0));
-                var blob = r.GetBlob(1, true);
-            }
-        }
-
-        [Fact]
         public void ShouldStoreAndRetrieveAggregateEvents()
         {
             var configuration = TestHelper.Configuration();
