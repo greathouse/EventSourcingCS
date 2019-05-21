@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Data.SQLite;
-using System.IO;
 using ConsoleApp1.Commands;
 using GreenMoonSoftware.EventSourcing.Core.Event;
 using GreenMoonSoftware.EventSourcing.Database;
@@ -16,6 +15,8 @@ namespace ConsoleApp1
             var program = new Program();
             program.CreateCustomer("kofspades");
             program.UpdateCustomer("kofspades", "Robert", "here@there.com");
+//            program.CreateCustomer("kofspades");
+            Console.WriteLine("Done!");
         }
 
         private readonly CustomerService _customerService;
@@ -29,13 +30,13 @@ namespace ConsoleApp1
                 ConnectionString = connectionString,
                 TableName = "CustomerEvent"
             };
-            var query = new CustomerQuery(configuration);
+            var query = new CustomerQuery(configuration, new JsonEventSerializer());
             _customerService = new CustomerService(bus, query, SqliteSubscriber(configuration));
         }
 
         private void CreateCustomer(string username)
         {
-            _customerService.Execute(new CreateCustomerCommand(Guid.NewGuid().ToString()) {Username = username});
+            _customerService.Execute(new CreateCustomerCommand(username) {Username = username});
         }
 
         private void UpdateCustomer(string username, string name, string email)

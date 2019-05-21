@@ -20,6 +20,10 @@ namespace ConsoleApp1
 
         public EventList Handle(CreateCustomerCommand cmd)
         {
+            if (Username != null)
+            {
+                throw new Exception($"Customer with username '{cmd.Username}' already created");
+            }
             return new EventList(new CreateCustomerEvent(cmd.Username, cmd.Username));
         }
 
@@ -30,8 +34,14 @@ namespace ConsoleApp1
 
         public void Handle(CreateCustomerEvent e)
         {
-            this.Id = e.AggregateId;
+            this.Id = e.Username;
             this.Username = e.Username;
+        }
+
+        public void Handle(UpdateCustomerEvent e)
+        {
+            this.Name = e.Name;
+            this.Email = e.Email;
         }
     }
 }
