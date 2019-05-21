@@ -5,7 +5,7 @@ namespace GreenMoonSoftware.EventSourcing.Core.Event
         public static void Apply(IAggregate aggregate, IEvent @event)
         {
             dynamic x = aggregate;
-            x.Handle((dynamic)@event);
+            x.Handle((dynamic) @event);
         }
     }
 }

@@ -4,8 +4,8 @@ namespace GreenMoonSoftware.EventSourcing.Core.Event
 {
     public class SimpleBus : IBus<IEvent, IEventSubscriber<IEvent>>
     {
-        private List<IEventSubscriber<IEvent>> _subscribers = new List<IEventSubscriber<IEvent>>();
-            
+        private readonly List<IEventSubscriber<IEvent>> _subscribers = new List<IEventSubscriber<IEvent>>();
+
         public void Post(IEvent payload)
         {
             _subscribers.ForEach(x => x.OnEvent(payload));

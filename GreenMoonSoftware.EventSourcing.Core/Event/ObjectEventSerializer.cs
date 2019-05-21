@@ -1,8 +1,7 @@
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
-using GreenMoonSoftware.EventSourcing.Core.Event;
 
-namespace GreenMoonSoftware.EventSourcing.Database
+namespace GreenMoonSoftware.EventSourcing.Core.Event
 {
     public class ObjectEventSerializer : IEventSerializer
     {

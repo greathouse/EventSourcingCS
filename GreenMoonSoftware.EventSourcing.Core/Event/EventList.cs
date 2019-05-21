@@ -7,7 +7,9 @@ namespace GreenMoonSoftware.EventSourcing.Core.Event
     {
         private readonly List<IEvent> events = new List<IEvent>();
 
-        public EventList(){}
+        public EventList()
+        {
+        }
 
         public EventList(IEvent e)
         {

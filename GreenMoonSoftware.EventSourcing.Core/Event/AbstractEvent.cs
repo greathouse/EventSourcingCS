@@ -5,9 +5,10 @@ namespace GreenMoonSoftware.EventSourcing.Core.Event
     [Serializable]
     public abstract class AbstractEvent : IEvent
     {
-        public AbstractEvent(string aggregateId, string type) {
-            this.AggregateId = aggregateId;
-            this.Type = type;
+        public AbstractEvent(string aggregateId, string type)
+        {
+            AggregateId = aggregateId;
+            Type = type;
         }
 
         public Guid Id { get; } = Guid.NewGuid();
