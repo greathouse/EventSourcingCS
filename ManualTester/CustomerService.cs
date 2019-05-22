@@ -11,9 +11,9 @@ namespace ConsoleApp1
     {
         private readonly IBus<IEvent, IEventSubscriber<IEvent>> _bus;
         private readonly SqlLiteAggregateQuery<CustomerAggregate> _query;
-        private readonly SqlLiteEventSubscriber<IEvent> _store;
+        private readonly DatabaseEventSubscriber<IEvent> _store;
 
-        public CustomerService(IBus<IEvent, IEventSubscriber<IEvent>> bus, SqlLiteAggregateQuery<CustomerAggregate> query, SqlLiteEventSubscriber<IEvent> store)
+        public CustomerService(IBus<IEvent, IEventSubscriber<IEvent>> bus, SqlLiteAggregateQuery<CustomerAggregate> query, DatabaseEventSubscriber<IEvent> store)
         {
             _bus = bus;
             _query = query;

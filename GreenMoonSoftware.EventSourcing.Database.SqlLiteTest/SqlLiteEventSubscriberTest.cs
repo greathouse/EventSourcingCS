@@ -36,7 +36,7 @@ namespace GreenMoonSoftware.EventSourcing.SqlLiteTest
         {
             var configuration = SetupDatabase();
 
-            var subscriber = new SqlLiteEventSubscriber<IEvent>(configuration, eventSerializer);
+            var subscriber = new DatabaseEventSubscriber<IEvent>(configuration, eventSerializer);
 
             var aggregateId = Guid.NewGuid().ToString();
             subscriber.OnEvent(new TestEvent1(aggregateId));
@@ -68,7 +68,7 @@ namespace GreenMoonSoftware.EventSourcing.SqlLiteTest
         {
             var configuration = SetupDatabase();
 
-            var subscriber = new SqlLiteEventSubscriber<IEvent>(configuration, serializer);
+            var subscriber = new DatabaseEventSubscriber<IEvent>(configuration, serializer);
 
             var aggregateId = Guid.NewGuid().ToString();
             var expectedData = $"This is my random data {Guid.NewGuid()}";

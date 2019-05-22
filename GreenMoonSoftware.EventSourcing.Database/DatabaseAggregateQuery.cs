@@ -1,4 +1,3 @@
-using System.Data.SQLite;
 using GreenMoonSoftware.EventSourcing.Core.Event;
 using GreenMoonSoftware.EventSourcing.Database;
 

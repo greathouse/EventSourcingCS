@@ -85,10 +85,10 @@ namespace ConsoleApp1
             _customerService.Execute(new UpdateCustomerCommand(username) { Name = name, Email = email});
         }
 
-        private SqlLiteEventSubscriber<IEvent> SqliteSubscriber(DatabaseConfiguration config)
+        private DatabaseEventSubscriber<IEvent> SqliteSubscriber(DatabaseConfiguration config)
         {
             CreateEventTable(config);
-            return new SqlLiteEventSubscriber<IEvent>(config, _eventSerializer);;
+            return new DatabaseEventSubscriber<IEvent>(config, _eventSerializer);;
         }
 
         private void CreateEventTable(DatabaseConfiguration configuration)

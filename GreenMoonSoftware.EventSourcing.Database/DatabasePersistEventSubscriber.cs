@@ -1,16 +1,15 @@
 using System;
-using System.Data.SQLite;
 using GreenMoonSoftware.EventSourcing.Core.Event;
 using GreenMoonSoftware.EventSourcing.Database;
 
 namespace GreenMoonSoftware.EventSourcing.SqlLite
 {
-    public class SqlLiteEventSubscriber<T> : IEventSubscriber<T> where T : IEvent
+    public class DatabaseEventSubscriber<T> : IEventSubscriber<T> where T : IEvent
     {
         private readonly DatabaseConfiguration _configuration;
         private readonly IEventSerializer _serializer;
 
-        public SqlLiteEventSubscriber(DatabaseConfiguration configuration, IEventSerializer serializer)
+        public DatabaseEventSubscriber(DatabaseConfiguration configuration, IEventSerializer serializer)
         {
             _configuration = configuration;
             _serializer = serializer;
