@@ -13,9 +13,20 @@ namespace ConsoleApp1
         static void Main(string[] args)
         {
             var program = new Program();
-            program.CreateCustomer("kofspades");
-            program.UpdateCustomer("kofspades", "Robert", "here@there.com");
-//            program.CreateCustomer("kofspades");
+            var command = "";
+            while (command != "exit")
+            {
+                command = Console.ReadLine();
+                if (command == null)
+                    continue;
+
+                var inputs = command.Split();
+                if (inputs[0] == "create")
+                    program.CreateCustomer(inputs[1]);
+
+                if (inputs[0] == "update")
+                    program.UpdateCustomer(inputs[1], inputs[2], inputs[3]);
+            }
             Console.WriteLine("Done!");
         }
 
@@ -46,7 +57,7 @@ namespace ConsoleApp1
 
         private SqlLiteEventSubscriber<IEvent> SqliteSubscriber(DatabaseConfiguration config)
         {
-            DropEventTable(config);
+//            DropEventTable(config);
             CreateEventTable(config);
             return new SqlLiteEventSubscriber<IEvent>(config, new JsonEventSerializer());;
         }
