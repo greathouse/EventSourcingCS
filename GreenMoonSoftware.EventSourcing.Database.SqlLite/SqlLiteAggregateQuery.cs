@@ -20,12 +20,12 @@ namespace GreenMoonSoftware.EventSourcing.SqlLite
         public T Retrieve(string aggregateId)
         {
             var x = Create();
-            using (var conn = new SQLiteConnection(_configuration.ConnectionString))
+            using (var conn = _configuration.CreateConnection())
             {
                 conn.Open();
                 var cmd = conn.CreateCommand();
                 cmd.CommandText = $"select * from {_configuration.TableName} where aggregateId = @aggregateId order by eventDateTime asc";
-                cmd.Parameters.AddWithValue("@aggregateId", aggregateId);
+                cmd.AddWithValue("@aggregateId", aggregateId);
                 var reader = cmd.ExecuteReader();
                 var events = new EventList();
                 while (reader.Read())

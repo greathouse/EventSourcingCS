@@ -42,7 +42,7 @@ namespace GreenMoonSoftware.EventSourcing.SqlLiteTest
             subscriber.OnEvent(new TestEvent1(aggregateId));
             subscriber.OnEvent(new TestEvent2(aggregateId));
 
-            var connection = new SQLiteConnection(configuration.ConnectionString);
+            var connection = configuration.CreateConnection();
             connection.Open();
             var command = connection.CreateCommand();
             command.CommandText = $"select count(*) from {configuration.TableName}";
@@ -75,7 +75,7 @@ namespace GreenMoonSoftware.EventSourcing.SqlLiteTest
             var testEvent = new EventWithData(aggregateId, expectedData);
             subscriber.OnEvent(testEvent);
 
-            var connection = new SQLiteConnection(configuration.ConnectionString);
+            var connection = configuration.CreateConnection();
             connection.Open();
             var command = connection.CreateCommand();
             command.CommandText = $"select data from {configuration.TableName}";

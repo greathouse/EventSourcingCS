@@ -12,7 +12,7 @@ namespace GreenMoonSoftware.EventSourcing.Core.Event
                 dynamic x = obj;
                 x.Handle((dynamic) @event);
             }
-            catch (RuntimeBinderException e)
+            catch (RuntimeBinderException)
             {
                 Console.WriteLine($"Object of type '{obj.GetType().FullName}' could not handle event '{@event.GetType().FullName}'");
             }

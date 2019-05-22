@@ -18,7 +18,7 @@ namespace GreenMoonSoftware.EventSourcing.SqlLite
 
         public void OnEvent(T @event)
         {
-            using (var conn = new SQLiteConnection(_configuration.ConnectionString))
+            using (var conn = _configuration.CreateConnection())
             {
                 conn.Open();
                 var cmd = conn.CreateCommand();
@@ -37,12 +37,12 @@ namespace GreenMoonSoftware.EventSourcing.SqlLite
                                         , @savedTimestamp
                                         , @data
                                     )";
-                cmd.Parameters.AddWithValue("@id", @event.Id);
-                cmd.Parameters.AddWithValue("@aggregateId", @event.AggregateId);
-                cmd.Parameters.AddWithValue("@eventType", @event.Type);
-                cmd.Parameters.AddWithValue("@eventDateTime", @event.EventDateTime);
-                cmd.Parameters.AddWithValue("@savedTimestamp", DateTime.Now);
-                cmd.Parameters.AddWithValue("@data", _serializer.Serialize(@event));
+                cmd.AddWithValue("@id", @event.Id);
+                cmd.AddWithValue("@aggregateId", @event.AggregateId);
+                cmd.AddWithValue("@eventType", @event.Type);
+                cmd.AddWithValue("@eventDateTime", @event.EventDateTime);
+                cmd.AddWithValue("@savedTimestamp", DateTime.Now);
+                cmd.AddWithValue("@data", _serializer.Serialize(@event));
                 cmd.ExecuteNonQuery();
             }
         }

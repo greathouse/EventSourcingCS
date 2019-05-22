@@ -42,7 +42,7 @@ namespace ConsoleApp1
         {
             _bus = new SimpleBus();
             var connectionString = $"Data Source=/var/folders/7z/9yx_mn5n3jv726jj7r0qyzp40000gn/T/tmp76YuZR.tmp;Version=3;";
-            _configuration = new DatabaseConfiguration
+            _configuration = new SqlLiteDatabaseConfiguration()
             {
                 ConnectionString = connectionString,
                 TableName = "CustomerEvent"
@@ -56,7 +56,7 @@ namespace ConsoleApp1
         private void Replay()
         {
             var events = new EventList();
-            using (var conn = new SQLiteConnection(_configuration.ConnectionString))
+            using (var conn = _configuration.CreateConnection())
             {
                 conn.Open();
                 var cmd = conn.CreateCommand();
@@ -93,7 +93,7 @@ namespace ConsoleApp1
 
         private void CreateEventTable(DatabaseConfiguration configuration)
         {
-            using (var conn = new SQLiteConnection(configuration.ConnectionString))
+            using (var conn = configuration.CreateConnection())
             {
                 conn.Open();
                 var createTable = conn.CreateCommand();

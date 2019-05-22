@@ -21,26 +21,26 @@ namespace ConsoleApp1
 
         public void Handle(CreateCustomerEvent e)
         {
-            using (var conn = new SQLiteConnection(_configuration.ConnectionString))
+            using (var conn = _configuration.CreateConnection())
             {
                 conn.Open();
                 var cmd = conn.CreateCommand();
                 cmd.CommandText = "insert into Customer (id, username) values (@username, @username)";
-                cmd.Parameters.AddWithValue("@username", e.Username);
+                cmd.AddWithValue("@username", e.Username);
                 cmd.ExecuteNonQuery();
             }
         }
 
         public void Handle(UpdateCustomerEvent e)
         {
-            using (var conn = new SQLiteConnection(_configuration.ConnectionString))
+            using (var conn = _configuration.CreateConnection())
             {
                 conn.Open();
                 var cmd = conn.CreateCommand();
                 cmd.CommandText = "update Customer set name = @name, email = @email where username = @username";
-                cmd.Parameters.AddWithValue("@name", e.Name);
-                cmd.Parameters.AddWithValue("@email", e.Email);
-                cmd.Parameters.AddWithValue("@username", e.AggregateId);
+                cmd.AddWithValue("@name", e.Name);
+                cmd.AddWithValue("@email", e.Email);
+                cmd.AddWithValue("@username", e.AggregateId);
                 cmd.ExecuteNonQuery();
             }
         }
