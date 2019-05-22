@@ -26,24 +26,53 @@ namespace ConsoleApp1
 
                 if (inputs[0] == "update")
                     program.UpdateCustomer(inputs[1], inputs[2], inputs[3]);
+
+                if (inputs[0] == "replay")
+                    program.Replay();
             }
             Console.WriteLine("Done!");
         }
 
         private readonly CustomerService _customerService;
+        private readonly DatabaseConfiguration _configuration;
+        private readonly JsonEventSerializer _eventSerializer;
+        private readonly SimpleBus _bus;
 
         public Program()
         {
-            var bus = new SimpleBus();
+            _bus = new SimpleBus();
             var connectionString = $"Data Source=/var/folders/7z/9yx_mn5n3jv726jj7r0qyzp40000gn/T/tmp76YuZR.tmp;Version=3;";
-            var configuration = new DatabaseConfiguration
+            _configuration = new DatabaseConfiguration
             {
                 ConnectionString = connectionString,
                 TableName = "CustomerEvent"
             };
-            var query = new CustomerQuery(configuration, new JsonEventSerializer());
-            _customerService = new CustomerService(bus, query, SqliteSubscriber(configuration));
-            bus.Register(new CustomerReadModelEventSubscriber(configuration));
+            _eventSerializer = new JsonEventSerializer();
+            var query = new CustomerQuery(_configuration, _eventSerializer);
+            _customerService = new CustomerService(_bus, query, SqliteSubscriber(_configuration));
+            _bus.Register(new CustomerReadModelEventSubscriber(_configuration));
+        }
+
+        private void Replay()
+        {
+            var events = new EventList();
+            using (var conn = new SQLiteConnection(_configuration.ConnectionString))
+            {
+                conn.Open();
+                var cmd = conn.CreateCommand();
+                cmd.CommandText = "delete from Customer";
+                cmd.ExecuteNonQuery();
+
+                cmd = conn.CreateCommand();
+                cmd.CommandText = "select * from CustomerEvent order by eventDateTime asc";
+                
+                var reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    events.Add(_eventSerializer.Deserialize((string)reader["eventType"], (byte[])reader["Data"]));
+                }
+            }
+            events.ForEach(x => _bus.Post(x));
         }
 
         private void CreateCustomer(string username)
@@ -59,23 +88,25 @@ namespace ConsoleApp1
         private SqlLiteEventSubscriber<IEvent> SqliteSubscriber(DatabaseConfiguration config)
         {
             CreateEventTable(config);
-            return new SqlLiteEventSubscriber<IEvent>(config, new JsonEventSerializer());;
+            return new SqlLiteEventSubscriber<IEvent>(config, _eventSerializer);;
         }
 
         private void CreateEventTable(DatabaseConfiguration configuration)
         {
-            var conn = new SQLiteConnection(configuration.ConnectionString);
-            conn.Open();
-            var createTable = conn.CreateCommand();
-            var tableCommandText = $@"create table IF NOT EXISTS {configuration.TableName} (
+            using (var conn = new SQLiteConnection(configuration.ConnectionString))
+            {
+                conn.Open();
+                var createTable = conn.CreateCommand();
+                var tableCommandText = $@"create table IF NOT EXISTS {configuration.TableName} (
                                             id TEXT,
                                             aggregateId TEXT,
                                             eventType TEXT,
                                             eventDateTime TEXT,
                                             savedTimestamp TEXT,
                                             data BLOB)";
-            createTable.CommandText = tableCommandText;
-            createTable.ExecuteNonQuery();
+                createTable.CommandText = tableCommandText;
+                createTable.ExecuteNonQuery();
+            }
         }
     }
 }
