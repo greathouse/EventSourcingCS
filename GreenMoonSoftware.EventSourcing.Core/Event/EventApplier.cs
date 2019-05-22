@@ -5,16 +5,16 @@ namespace GreenMoonSoftware.EventSourcing.Core.Event
 {
     public class EventApplier
     {
-        public static void Apply(IAggregate aggregate, IEvent @event)
+        public static void Apply(object obj, IEvent @event)
         {
             try
             {
-                dynamic x = aggregate;
+                dynamic x = obj;
                 x.Handle((dynamic) @event);
             }
             catch (RuntimeBinderException e)
             {
-                throw new UnhandledEventException($"Aggregate of type '{aggregate.GetType().FullName}' could not handle event '{@event.GetType().FullName}'", e);
+                Console.WriteLine($"Object of type '{obj.GetType().FullName}' could not handle event '{@event.GetType().FullName}'");
             }
         }
     }

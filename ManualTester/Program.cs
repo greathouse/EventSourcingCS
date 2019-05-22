@@ -43,6 +43,7 @@ namespace ConsoleApp1
             };
             var query = new CustomerQuery(configuration, new JsonEventSerializer());
             _customerService = new CustomerService(bus, query, SqliteSubscriber(configuration));
+            bus.Register(new CustomerReadModelEventSubscriber(configuration));
         }
 
         private void CreateCustomer(string username)
@@ -57,18 +58,8 @@ namespace ConsoleApp1
 
         private SqlLiteEventSubscriber<IEvent> SqliteSubscriber(DatabaseConfiguration config)
         {
-//            DropEventTable(config);
             CreateEventTable(config);
             return new SqlLiteEventSubscriber<IEvent>(config, new JsonEventSerializer());;
-        }
-
-        private void DropEventTable(DatabaseConfiguration config)
-        {
-            var conn = new SQLiteConnection(config.ConnectionString);
-            conn.Open();
-            var cmd = conn.CreateCommand();
-            cmd.CommandText = $@"DROP TABLE IF EXISTS {config.TableName}";
-            cmd.ExecuteNonQuery();
         }
 
         private void CreateEventTable(DatabaseConfiguration configuration)
