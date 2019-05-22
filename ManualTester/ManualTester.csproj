@@ -10,6 +10,7 @@
       <ProjectReference Include="..\GreenMoonSoftware.EventSourcing.Core\GreenMoonSoftware.EventSourcing.Core.csproj" />
       <ProjectReference Include="..\GreenMoonSoftware.EventSourcing.Database.SqlLite\GreenMoonSoftware.EventSourcing.Database.SqlLite.csproj" />
       <ProjectReference Include="..\GreenMoonSoftware.EventSourcing.Json\GreenMoonSoftware.EventSourcing.Json.csproj" />
+      <ProjectReference Include="..\GreenMoonSoftware.EventSourcing.SqlServer\GreenMoonSoftware.EventSourcing.SqlServer.csproj" />
     </ItemGroup>
 
 </Project>

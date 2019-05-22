@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Data.SQLite;
 using ConsoleApp1.Commands;
 using GreenMoonSoftware.EventSourcing.Core.Event;
 using GreenMoonSoftware.EventSourcing.Database;
 using GreenMoonSoftware.EventSourcing.Json;
 using GreenMoonSoftware.EventSourcing.SqlLite;
+using GreenMoonSoftware.EventSourcing.SqlServer;
 
 namespace ConsoleApp1
 {
@@ -41,16 +41,30 @@ namespace ConsoleApp1
         public Program()
         {
             _bus = new SimpleBus();
-            var connectionString = $"Data Source=/var/folders/7z/9yx_mn5n3jv726jj7r0qyzp40000gn/T/tmp76YuZR.tmp;Version=3;";
-            _configuration = new SqlLiteDatabaseConfiguration()
-            {
-                ConnectionString = connectionString,
-                TableName = "CustomerEvent"
-            };
+//            _configuration = SqlLiteDatabase();
+            _configuration = SqlServerDatabase();
             _eventSerializer = new JsonEventSerializer();
             var query = new CustomerQuery(_configuration, _eventSerializer);
             _customerService = new CustomerService(_bus, query, SqliteSubscriber(_configuration));
             _bus.Register(new CustomerReadModelEventSubscriber(_configuration));
+        }
+
+        private DatabaseConfiguration SqlServerDatabase()
+        {
+            return new SqlServerDatabaseConfiguration
+            {
+                ConnectionString = "Data Source=localhost;Initial Catalog=tempdb;User id=sa;Password=<YourStrong!Passw0rd>;",
+                TableName = "CustomerEvent"
+            };
+        }
+
+        private static SqlLiteDatabaseConfiguration SqlLiteDatabase()
+        {
+            return new SqlLiteDatabaseConfiguration()
+            {
+                ConnectionString = $"Data Source=/var/folders/7z/9yx_mn5n3jv726jj7r0qyzp40000gn/T/tmp76YuZR.tmp;Version=3;",
+                TableName = "CustomerEvent"
+            };
         }
 
         private void Replay()
@@ -87,7 +101,7 @@ namespace ConsoleApp1
 
         private DatabaseEventSubscriber<IEvent> SqliteSubscriber(DatabaseConfiguration config)
         {
-            CreateEventTable(config);
+//            CreateEventTable(config);
             return new DatabaseEventSubscriber<IEvent>(config, _eventSerializer);;
         }
 
@@ -97,7 +111,7 @@ namespace ConsoleApp1
             {
                 conn.Open();
                 var createTable = conn.CreateCommand();
-                var tableCommandText = $@"create table IF NOT EXISTS {configuration.TableName} (
+                var tableCommandText = $@"create table {configuration.TableName} (
                                             id TEXT,
                                             aggregateId TEXT,
                                             eventType TEXT,
