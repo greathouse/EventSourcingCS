@@ -1,8 +1,7 @@
 using System;
 using GreenMoonSoftware.EventSourcing.Core.Event;
-using GreenMoonSoftware.EventSourcing.Database;
 
-namespace GreenMoonSoftware.EventSourcing.SqlLite
+namespace GreenMoonSoftware.EventSourcing.Database
 {
     public class DatabaseEventSubscriber<T> : IEventSubscriber<T> where T : IEvent
     {

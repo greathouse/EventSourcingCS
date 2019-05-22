@@ -1,7 +1,6 @@
 using GreenMoonSoftware.EventSourcing.Core.Event;
-using GreenMoonSoftware.EventSourcing.Database;
 
-namespace GreenMoonSoftware.EventSourcing.SqlLite
+namespace GreenMoonSoftware.EventSourcing.Database
 {
     public abstract class SqlLiteAggregateQuery<T> where T: IAggregate
     {

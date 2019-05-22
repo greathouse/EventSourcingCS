@@ -3,6 +3,7 @@ using System.Linq;
 using GreenMoonSoftware.EventSourcing.Core;
 using GreenMoonSoftware.EventSourcing.Core.Command;
 using GreenMoonSoftware.EventSourcing.Core.Event;
+using GreenMoonSoftware.EventSourcing.Database;
 using GreenMoonSoftware.EventSourcing.SqlLite;
 
 namespace ConsoleApp1
